@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCharacterPricesTable extends Migration
+class CreateCharacterSkinsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateCharacterPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('character_prices', function (Blueprint $table) {
+        Schema::create('character_skins', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('character_id');
-            $table->unsignedBigInteger('coin_id');
-            $table->integer('price')->default(0);
+            $table->unsignedBigInteger('skin_id');
+            
             
             $table->foreign('character_id')->references('id')->on('characters');
-            $table->foreign('coin_id')->references('id')->on('coins');
-       
+            $table->foreign('skin_id')->references('id')->on('skins');
+
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateCharacterPricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('character_prices');
+        Schema::dropIfExists('character_skins');
     }
 }

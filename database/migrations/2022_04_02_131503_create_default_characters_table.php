@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCharacterPricesTable extends Migration
+class CreateDefaultCharactersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateCharacterPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('character_prices', function (Blueprint $table) {
+        Schema::create('default_characters', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger('character_id');
-            $table->unsignedBigInteger('coin_id');
-            $table->integer('price')->default(0);
+            $table->string('name', 100)->default('-');
+            $table->unsignedBigInteger('character_id')->default(0);
+            $table->boolean('enabled')->default(1);
+            $table->timestamps();
             
             $table->foreign('character_id')->references('id')->on('characters');
-            $table->foreign('coin_id')->references('id')->on('coins');
-       
-            $table->timestamps();
         });
     }
 
@@ -34,6 +31,6 @@ class CreateCharacterPricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('character_prices');
+        Schema::dropIfExists('default_characters');
     }
 }

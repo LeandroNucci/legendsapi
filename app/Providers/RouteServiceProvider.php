@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
+    
+    protected $namespace_controller = 'App\Http\Controllers';
+
     /**
      * The path to the "home" route for your application.
      *
@@ -36,17 +39,58 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureRateLimiting();
+        parent::boot();
+    }
+    
+    public function map(){
+        $this->mapApiRoutes();
+        $this->mapWebRoutes();
+        $this->mapAuthRoutes();
+        $this->mapSkinRoutes();
+        $this->mapGenericRoutes();
+    }
+        
+    protected function mapWebRoutes(){
+        Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/web.php'));
+    }
 
-        $this->routes(function () {
-            Route::prefix('api')
+    protected function mapApiRoutes(){
+        Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
+    }
+    
+    
+    /**
+     * Define as rotas characters da aplicacao.
+     *
+     * @return void
+     */
+    protected function mapAuthRoutes()
+    {
+        Route::prefix('api/auth')
+            ->middleware('api')
+            ->namespace('App\Http\Controllers\Login')
+            ->group(base_path('routes/auth.php'));
+    }
 
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
-        });
+    protected function mapSkinRoutes()
+    {
+        Route::prefix('api/skin')
+            ->middleware('api')
+            ->namespace('App\Http\Controllers\Skin')
+            ->group(base_path('routes/skin.php'));
+    }
+
+    protected function mapGenericRoutes()
+    {
+        Route::prefix('api/generics')
+            ->middleware('api')
+            ->namespace('App\Http\Controllers\Generics')
+            ->group(base_path('routes/generics.php'));
     }
 
     /**

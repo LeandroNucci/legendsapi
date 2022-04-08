@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Skins;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class LoginRequest extends FormRequest
+class SkinRequest extends FormRequest
 {
     private $fields;
 
@@ -32,11 +33,9 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            "token_google" => ["required", "string", "max:100", "min:6"],
-            "nickname" => ["nullable", "string", 'regex:/^[\w]*$/', "min:3", "max:16", "unique:users,nickname"],
+            'character_id' => ['required', 'integer'],
         ];
     }
-    
 
     /**
      * Tratar mensagens de erro de retorno
@@ -44,27 +43,16 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'regex' => '1',
-            'required' => '2',
-            'unique' => '3',
-            'max' => 4,
+            
         ];
     }
-    
-    
+
     /**
      * Sobrescrita do método de validação
      */
     public function validateResolved()
     {
         parent::validateResolved();
-        
-        $this->fields['enable'] = 1;
-        //$this->fields["token_google"] = $this->fields["token_google"];
-        //$this->fields["nickname"] = $this->fields["nickname"] ?? null;
-
-    //    $this->fields['jokenpo'] = 'joooookenpo!';
-        //$this->inputs["nick"] = $this->inputs["nickname"] ?? null;
 
         $this->replace($this->fields);
     }

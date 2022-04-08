@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use \Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -26,6 +27,32 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+    //Override json response
+    protected function invalidJson($request, ValidationException $exception)
+    {
+        return response()->json([
+            'code'    => $exception->status,
+            'message' => $exception->getMessage(),
+            'errors'  => $this->transformErrors($exception),
+
+        ], $exception->status);
+    }
+
+// transform the error messages,
+    private function transformErrors(ValidationException $exception)
+    {
+        $errors = [];
+
+        foreach ($exception->errors() as $field => $message) {
+           $errors[] = [
+               'field' => $field,
+               'code' => $message[0],
+           ];
+        }
+
+        return $errors;
+    }
 
     /**
      * Register the exception handling callbacks for the application.

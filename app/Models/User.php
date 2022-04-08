@@ -6,7 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+//use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -18,9 +19,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'nickname',
+        'token_google',
+        'enable',
     ];
 
     /**
@@ -29,8 +30,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        'id',
+        'email',
         'remember_token',
+        'password',
+        'token_google',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -39,6 +45,23 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        //'email_verified_at' => 'datetime',
     ];
+
+    
+    //retorna todos os coins do usuário
+    public function coins(){
+        
+        return $this->belongsToMany(Coins::class, 'coin_inventories', 'user_id', 'coin_id')->withPivot(['amount']);
+    }
+
+    //retorna todos os personagens do usuário
+    public function characters(){
+        return $this->hasMany(CharacterInventories::class);
+    }
+
+    public function skins(){
+        return $this->hasMany(CharacterSkinsInventories::class);
+      //  return $this->belongsToMany(Skins::class, 'character_skins_inventories', 'user_id', 'skin_id')->withPivot(['character_id']);
+    }
 }

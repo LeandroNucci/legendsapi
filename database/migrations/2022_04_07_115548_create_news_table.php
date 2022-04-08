@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCharactersTable extends Migration
+class CreateNewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCharactersTable extends Migration
      */
     public function up()
     {
-        Schema::create('characters', function (Blueprint $table) {
+        Schema::create('news', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name', 100);
-            $table->integer('min_level')->default(0);
+            
+            $table->text("message")->comment("message da noticia");
+            $table->integer("language_id")->comment("id da linguagem");
+            
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateCharactersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('characters');
+        Schema::dropIfExists('news');
     }
 }
