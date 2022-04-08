@@ -29,6 +29,6 @@ class CreateLuckyWheelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lucky_wheel');
+        Schema::dropIfExists('lucky_wheels');
     }
 }
