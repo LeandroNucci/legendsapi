@@ -21,8 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::middleware('auth:api')->group(function () {
-    // our routes to be protected will go in here
-//    Route::post('/teste', [LoginController::class, 'teste']);
+
+    
 });
 
 Route::post('/login', [AuthController::class, 'login']);
