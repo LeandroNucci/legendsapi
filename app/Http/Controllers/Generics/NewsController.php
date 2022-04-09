@@ -7,9 +7,9 @@ use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
-{
+{   
     //Retorna todos as news
-    public function getNews(Request $request){
+    public static function getNews(Request $request){
 
         $data = '';
 

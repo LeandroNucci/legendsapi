@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLuckyWheelsTable extends Migration
+class CreateGameVersionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateLuckyWheelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lucky_wheels', function (Blueprint $table) {
+        Schema::create('game_versions', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100)->default('-');
-            $table->integer('wheel_id')->default(1);
-            $table->integer('probability')->default(1);
-            $table->boolean('enabled')->default(0);
+            $table->integer('version')->default();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateLuckyWheelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lucky_wheels');
+        Schema::dropIfExists('game_versions');
     }
 }
