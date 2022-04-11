@@ -13,6 +13,7 @@ class CharacterSkinsInventories extends Model
     protected $fillable = [
         'user_id', 
         'character_id',
+        'skin_id',
     ];
 
     //campos de mutacoes de datas

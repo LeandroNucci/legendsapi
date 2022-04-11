@@ -23,7 +23,7 @@ class Skins extends Model
 
     //campos de mutacoes de datas
     protected $hidden = [
-        'id',
+        //'id',
         //'user_id',
         'created_at',
         'updated_at',

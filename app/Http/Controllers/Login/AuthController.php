@@ -39,12 +39,16 @@ class AuthController extends Controller
         $characterId = 1;
 
      //   $user = User::where('token_google', $request->token_google)->first();
-/*
+
         //Todas as skins disponíveis para o personagem
-        $skins = CharacterSkins::where('character_id', $characterId)
+        /*$skins = CharacterSkins::where('character_id', $characterId)
         ->with('skins')
+        ->where('default', 1)
         ->get();
 
+        echo  $skins;
+        return;*/
+/*
         $price = CharacterSkinsPrices::where('character_skin_id', 7)->get();
 
         return response()->json([
@@ -152,20 +156,44 @@ class AuthController extends Controller
                 ]);
             }
 
+            //Localiza todos os personagens defaults
             $default_characters = DefaultCharacters::where('enabled', 1)->get();
 
             foreach ($default_characters as $character){
+
+                $target_character_id = $character->id;
+
+                //Localiza todas as skins defaults do personagem
+                $default_skins = CharacterSkins::where('character_id', $target_character_id)
+                ->with('skins')
+                ->where('default', 1)
+                ->get();
+
+                //Insere o personagem ao inventário do usuário
                 CharacterInventories::create([
                     'user_id' => $n_user->id,
-                    'character_id' => $character->id,
+                    'character_id' => $target_character_id,
                 ]);
+
+                //Insere todas as skins default do personagem ao inventário do usuário
+                foreach($default_skins as $skin){
+
+                    echo $skin;
+
+                    $skinsss = Skins::all();
+                    $xxx = $skinsss[0];
+                    
+                    CharacterSkinsInventories::create([
+                        'user_id' => $n_user->id,
+                        'character_id' => $target_character_id,
+                        'skin_id' => $xxx->id,    
+                    ]);
+                }                
             }
-            
+                        
             return $n_user;
         });
-
-        echo $user== null;
-        //echo $user->google_token;
+        
         return $user;
     }
 }
