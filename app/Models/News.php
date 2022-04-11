@@ -24,6 +24,7 @@ class News extends Model
         'message'       => 'string',
         'language_id'   => 'integer',
         'game_id'       => 'integer',
+        'created_at' => 'datetime:Y-m-d',
     ];
 
     //campos de mutacoes de datas
@@ -36,7 +37,8 @@ class News extends Model
     protected $hidden = [
         'id',
         'language_id',
-        'created_at',
+        //'created_at',
         'updated_at',
     ];
+
 }
