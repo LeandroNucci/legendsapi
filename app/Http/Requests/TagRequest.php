@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
-class LoginRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     private $fields;
 
@@ -15,28 +15,26 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Determine if the user is authorized to make this request.     
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
     public function authorize()
     {
-        /*if(!Auth::check()){
-            return false;
-        }*/
-
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * @return array
      */
     public function rules()
     {
         return [
-            "token_google" => ['required', "string", "max:100", "min:6"],
-            "nickname" => ["nullable", "string", 'regex:/^[\w]*$/', "min:3", "max:16", "unique:users,nickname"],
+            "tag" => ["required", "string", 'regex:/^[\w]*$/', 'not_regex:/^(cm|gm|adm)$/i', "min:2", "max:4"],
         ];
     }
-    
 
     /**
      * Tratar mensagens de erro de retorno
@@ -47,25 +45,18 @@ class LoginRequest extends FormRequest
             'regex' => '1',
             'required' => '2',
             'unique' => '3',
-            'max' => '4',
-            'min' => '5',
+            'max' => 4,
+            'min' => 5,
+            'not_regex' => 6,
         ];
-    }    
-    
-    /**
+    }
+
+     /**
      * Sobrescrita do método de validação
      */
     public function validateResolved()
     {
         parent::validateResolved();
-        
-        $this->fields['enable'] = 1;
-        //$this->fields["token_google"] = $this->fields["token_google"];
-        //$this->fields["nickname"] = $this->fields["nickname"] ?? null;
-
-    //    $this->fields['jokenpo'] = 'joooookenpo!';
-        //$this->inputs["nick"] = $this->inputs["nickname"] ?? null;
-
         $this->replace($this->fields);
     }
 }

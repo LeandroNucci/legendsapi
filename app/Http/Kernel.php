@@ -45,7 +45,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'api:auth' => [
+        'apiauth' => [
             'bindings',
             'auth:api',
         ],

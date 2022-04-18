@@ -48,6 +48,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAuthRoutes();
         $this->mapSkinRoutes();
         $this->mapGenericRoutes();
+        $this->mapUserRoutes();
     }
         
     protected function mapWebRoutes(){
@@ -91,6 +92,14 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace('App\Http\Controllers\Generics')
             ->group(base_path('routes/generics.php'));
+    }
+
+    protected function mapUserRoutes()
+    {
+        Route::prefix('api/user')
+            ->middleware('apiauth')
+            ->namespace('App\Http\Controllers\User')
+            ->group(base_path('routes/user.php'));
     }
 
     /**

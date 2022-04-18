@@ -26,8 +26,6 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {    
-
-
     public function login(LoginRequest $request){
         
         
@@ -130,6 +128,7 @@ class AuthController extends Controller
             "userData" => [
                 "nickname" => $user->nickname,
                 "enable" => $user->enable,
+                "tag" => $user->tag,
             ],            
             "token" => $token,
             "coins" => $coins,
@@ -178,7 +177,7 @@ class AuthController extends Controller
                 //Insere todas as skins default do personagem ao inventário do usuário
                 foreach($default_skins as $skin){
 
-                    echo $skin;
+                    //echo $skin;
 
                     $skinsss = Skins::all();
                     $xxx = $skinsss[0];
