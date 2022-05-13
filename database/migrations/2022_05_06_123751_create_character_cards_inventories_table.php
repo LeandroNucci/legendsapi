@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCharacterInventoriesTable extends Migration
+class CreateCharacterCardsInventoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,18 @@ class CreateCharacterInventoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('character_inventories', function (Blueprint $table) {
-            $table->id();
+        Schema::create('character_cards_inventories', function (Blueprint $table) {
+           // $table->id();
 
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('character_id');
-
-            $table->integer('kill')->default(0);
-            $table->integer('death')->default(0);
-            $table->integer('experience')->default(0);
-            $table->timestamps();
-
+            
+            $table->integer('amount')->default('0');
+            
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('character_id')->references('id')->on('characters');
-       
+
+            $table->timestamps();
         });
     }
 
@@ -37,6 +35,6 @@ class CreateCharacterInventoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('character_inventories');
+        Schema::dropIfExists('character_cards_inventories');
     }
 }

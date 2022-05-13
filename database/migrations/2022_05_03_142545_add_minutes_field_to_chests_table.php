@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDefaultToCharacterSkinsTable extends Migration
+class AddMinutesFieldToChestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDefaultToCharacterSkinsTable extends Migration
      */
     public function up()
     {
-        Schema::table('character_skins', function (Blueprint $table) {
-            $table->boolean('default')->after('skin_id')->default(0);
+        Schema::table('chests', function (Blueprint $table) {
+            $table->integer('minutes')->default(1);
         });
     }
 
@@ -25,9 +25,8 @@ class AddDefaultToCharacterSkinsTable extends Migration
      */
     public function down()
     {
-        Schema::table('character_skins', function (Blueprint $table) {
-            //
-            $table->dropColumn('default');
+        Schema::table('chests', function (Blueprint $table) {
+            $table->dropColumn('minutes');
         });
     }
 }

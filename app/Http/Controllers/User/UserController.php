@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Score\ScoreController;
 use App\Http\Requests\NicknameRequest;
 use App\Http\Requests\TagRequest;
 use App\Models\DailyGift;
 use App\Models\DailyGiftReceives;
 use App\Models\User;
+use App\Models\UsersScores;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 //Script tem como objetivo alterar as configurações do jogador
 class UserController extends Controller
-{
+{   
     //Altera o nickname do jogador
     public function changeNickname(NicknameRequest $request){
 

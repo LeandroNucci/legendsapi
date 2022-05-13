@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class SetDefaultValueToTagFromUsersTable extends Migration
+class CreateCharactersRarityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class SetDefaultValueToTagFromUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-           
-            $table->string('tag', 10)->default('')->change();
+        Schema::create('characters_rarity', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 100);
+            $table->string('description', 100);
+            $table->timestamps();
         });
     }
 
@@ -26,8 +28,6 @@ class SetDefaultValueToTagFromUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            
-        });
+        Schema::dropIfExists('characters_rarity');
     }
 }

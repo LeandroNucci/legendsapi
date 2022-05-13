@@ -56,6 +56,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Coins::class, 'coin_inventories', 'user_id', 'coin_id')->withPivot(['amount']);
     }
 
+
+    public function teste(){
+        return $this->hasMany(CoinInventories::class);
+    }
     //retorna todos os personagens do usuário
     public function characters(){
         return $this->hasMany(CharacterInventories::class);
@@ -65,4 +69,9 @@ class User extends Authenticatable
         return $this->hasMany(CharacterSkinsInventories::class);
       //  return $this->belongsToMany(Skins::class, 'character_skins_inventories', 'user_id', 'skin_id')->withPivot(['character_id']);
     }
+
+    public function cards(){
+        return $this->belongsToMany(Character::class, 'character_cards_inventories', 'user_id', 'character_id')->withPivot(['amount']);
+    }
+    
 }

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Login;
 
 use App\Http\Controllers\CallbackController;
 use App\Http\Controllers\CharacterController;
-use App\Http\Controllers\CoinController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\FormatController;
+use App\Http\Controllers\LegendsMath;
 use App\Http\Controllers\LuckyWheelController;
+use App\Http\Controllers\Score\ScoreController;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\XXX;
 use App\Models\Character;
@@ -18,6 +20,7 @@ use App\Models\CoinInventories;
 use App\Models\DefaultCharacters;
 use App\Models\DefaultCoins;
 use App\Models\CharacterSkinsInventories;
+use App\Models\Chests;
 use App\Models\User;
 use App\Models\Skins;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +29,12 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {    
+    public function teste(Request $request){
+                
+        $randomPrizes = LegendsMath::GetRandomColumns(16, 2, 4);
+        return response()->json($randomPrizes);
+    }
+
     public function login(LoginRequest $request){
         
         
@@ -117,9 +126,12 @@ class AuthController extends Controller
         // Creating a token without scopes...
         $token = $user->createToken('TempToken')->accessToken;
         $coins = $user->coins;
-        $coins = CoinController::Format($coins);
+        $coins = FormatController::FormatCoins($coins);
 
-        $characters = $user->characters;
+        //Procura pelo score do usuário
+        $score = ScoreController::getScore($user->id, 1); 
+
+       // $characters = $user->characters;
         /*$char = $characters[0];
         $skins = $char->skins;
         echo $skins;
@@ -132,7 +144,8 @@ class AuthController extends Controller
             ],            
             "token" => $token,
             "coins" => $coins,
-            "characters" => $characters,
+            "score" => $score == null? 0 : $score->amount,
+           // "characters" => $characters,
         ]);
     }
 
@@ -156,7 +169,7 @@ class AuthController extends Controller
             }
 
             //Localiza todos os personagens defaults
-            $default_characters = DefaultCharacters::where('enabled', 1)->get();
+           /* $default_characters = DefaultCharacters::where('enabled', 1)->get();
 
             foreach ($default_characters as $character){
 
@@ -188,7 +201,7 @@ class AuthController extends Controller
                         'skin_id' => $xxx->id,    
                     ]);
                 }                
-            }
+            }*/
                         
             return $n_user;
         });

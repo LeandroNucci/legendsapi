@@ -13,6 +13,7 @@ class Coins extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        //'amount',
         //'nickname',
         //'token_google',
     ];

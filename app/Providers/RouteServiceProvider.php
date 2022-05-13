@@ -49,6 +49,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapSkinRoutes();
         $this->mapGenericRoutes();
         $this->mapUserRoutes();
+        $this->mapChestRoutes();
+        $this->mapScoresRoutes();
     }
         
     protected function mapWebRoutes(){
@@ -92,6 +94,22 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace('App\Http\Controllers\Generics')
             ->group(base_path('routes/generics.php'));
+    }
+
+    protected function mapScoresRoutes()
+    {
+        Route::prefix('api/score')
+            ->middleware('api')
+            ->namespace('App\Http\Controllers\Score')
+            ->group(base_path('routes/score.php'));
+    }
+
+    protected function mapChestRoutes()
+    {
+        Route::prefix('api/chest')
+            ->middleware('apiauth')
+            ->namespace('App\Http\Controllers\Chest')
+            ->group(base_path('routes/chest.php'));
     }
 
     protected function mapUserRoutes()

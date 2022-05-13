@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDefaultCharactersTable extends Migration
+class CreateChestsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateDefaultCharactersTable extends Migration
      */
     public function up()
     {
-        Schema::create('default_characters', function (Blueprint $table) {
+        Schema::create('chests', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100)->default('-');
-            $table->unsignedBigInteger('character_id')->default(0);
-            $table->boolean('enabled')->default(1);
+            $table->unsignedBigInteger('rarity_id');
+            $table->string('name', 100);
+            $table->string('description', 100);
+            $table->boolean('enabled')->default(0);
             $table->timestamps();
             
-            $table->foreign('character_id')->references('id')->on('characters');
+            $table->foreign('rarity_id')->references('id')->on('chests_rarity');
         });
     }
 
@@ -31,6 +32,6 @@ class CreateDefaultCharactersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('default_characters');
+        Schema::dropIfExists('chests');
     }
 }

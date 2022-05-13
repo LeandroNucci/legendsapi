@@ -27,4 +27,4 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
-//Route::get('/patcher', [PatcherController::class, 'getPatcher']);
+Route::post('/teste', [AuthController::class, 'teste']);
