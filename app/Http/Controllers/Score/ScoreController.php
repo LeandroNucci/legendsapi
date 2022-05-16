@@ -38,7 +38,7 @@ class ScoreController extends Controller
 
                 $score = UsersScores::create([
                     'user_id' => $user->id,
-                    'score' => $userInfo['score'] < 0 ? 0 : $userInfo['score'],
+                    'amount' => $userInfo['score'] < 0 ? 0 : $userInfo['score'],
                     'type' => $game_mode,
                 ]);
             }else{

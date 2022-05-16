@@ -113,7 +113,7 @@ class AuthController extends Controller
                 'code' => 1,
             ];
 
-           return CallbackController::errorCallback(401, $params, 'Login falhou! Você precisa realizar o registro, passe teu nick.');
+           return CallbackController::errorCallback(422, $params, 'Login falhou! Você precisa realizar o registro, passe teu nick.');
             //return response()->json(['data' => ['message'=> 'Login falhou! Você precisa realizar o registro, passe teu nick.']], 401);
         }
 
@@ -138,6 +138,7 @@ class AuthController extends Controller
 */
         return response()->json([
             "userData" => [
+                "id" => $user->id,
                 "nickname" => $user->nickname,
                 "enable" => $user->enable,
                 "tag" => $user->tag,
